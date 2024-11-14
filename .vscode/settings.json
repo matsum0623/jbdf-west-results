@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./api/layer/common_layer/python"
+    ],
+    "javascript.preferences.importModuleSpecifier": "non-relative"
+}

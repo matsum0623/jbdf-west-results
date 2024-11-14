@@ -1,0 +1,148 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  api
+
+  Sample SAM Template for api
+
+Globals:
+  Function:
+    Handler: app.lambda_handler
+    Runtime: python3.12
+    Timeout: 29
+    Environment:
+      Variables:
+        DYNAMODB_TABLE_NAME: !Ref JbdfWestResultsDynamoDBTable
+    LoggingConfig:
+      LogFormat: JSON
+
+Resources:
+  JbdfWestResultsDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: jbdf-west-results
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+  ApiHandlerLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action: "sts:AssumeRole"
+            Principal:
+              Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+
+  CommonLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: CommonLayer
+      ContentUri: layer/common_layer/
+      CompatibleRuntimes:
+        - python3.12
+
+  CommonAPI: # API Gateway
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: jbdf-west-results-api
+      Cors:
+        AllowOrigin: "'*'"
+        AllowHeaders: "'Origin, X-Requested-With, Content-Type, Authorization, Accept'"
+        AllowMethods: "'GET,POST,OPTIONS'"
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: api-v1-oas30-apigateway.yaml
+      OpenApiVersion: 3.0.1
+      StageName: Prod
+      EndpointConfiguration: EDGE
+
+  ResultsGetApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handler/api_gateway/results/get/
+      Architectures:
+        - x86_64
+      Layers:
+        - !Ref CommonLayer
+      Role: !GetAtt ApiHandlerLambdaRole.Arn
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            Path: /results
+            Method: GET
+            RestApiId:
+              Ref: CommonAPI
+
+  ResultsDateClassGetApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handler/api_gateway/results/date/class/get/
+      Architectures:
+        - x86_64
+      Layers:
+        - !Ref CommonLayer
+      Role: !GetAtt ApiHandlerLambdaRole.Arn
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            Path: /results/{date}/{class_id}
+            Method: GET
+            RestApiId:
+              Ref: CommonAPI
+
+  CouplesGetApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handler/api_gateway/results/couple/get/
+      Architectures:
+        - x86_64
+      Layers:
+        - !Ref CommonLayer
+      Role: !GetAtt ApiHandlerLambdaRole.Arn
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            Path: /couple
+            Method: GET
+            RestApiId:
+              Ref: CommonAPI
+
+  CouplesCoupleIdGetApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handler/api_gateway/results/couple/couple_id/get/
+      Architectures:
+        - x86_64
+      Layers:
+        - !Ref CommonLayer
+      Role: !GetAtt ApiHandlerLambdaRole.Arn
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            Path: /couple/{couple_id}
+            Method: GET
+            RestApiId:
+              Ref: CommonAPI
+

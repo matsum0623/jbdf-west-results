@@ -1,0 +1,44 @@
+エンティティ
+    試合
+        PK: METADATA#COMPETITION
+        SK: DATE#<YYYYMMDD>                     event_info.date
+        Name: 競技会名称                        event_info.title
+        Place: 開催場所                         event_info.place
+        Classes: [  開催クラスリスト            event_info.(division_pro_ama, class, division, )
+            PBA,
+            PBB,
+        ]
+    試合結果
+        PK: RESULTS#<YYYYMMDD>                     event_info.date
+        SK: CLASS#<CLASS_ID>                    event_info.(division_pro_ama, class, division, )
+        Program: 種目                           event_info.program
+        Url: <試合結果URL>                      url
+        Results: {
+            <選手番号>: {                       result_data[0]
+                Result: <結果>,                 result_data[5]
+                Leader: <リーダー名>,           result_data[1]
+                Partner: <パートナー名>,        result_data[2]
+                BackNumber: <背番号>,           result_data[4]
+                Rank: <所属級>                  result_data[3]
+            }
+        }
+    選手
+        METADATA#COUPLE
+        COUPLE#<選手番号>                       result_data[0]
+        Leader: <最新のリーダー名>
+        Partner: <最新のパートナー名>
+        Results: {
+            <YYYYMMDD>#<出場クラス> :{                       event_info.date
+                Leader: <リーダー名>,           result_data[1]
+                Partner: <パートナー名>,        result_data[2]
+                Class: <出場クラス>,                 result_data[3]
+                Rank: <所属級>,                 result_data[3]
+                BackNumber: <背番号>,           result_data[4]
+                Result: <最終順位>              result_data[5]
+            },
+        }
+
+    クラスID
+        PK: METADATA:CLASS
+        SK: CLASS#<CLASS_ID>
+        Name: <開催クラス名>
