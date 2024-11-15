@@ -13,7 +13,7 @@ class Couple:
         return response['Items'][0] if 'Items' in response and len(response['Items']) > 0 else {}
 
     @staticmethod
-    def list(couple_id, filters, limit=100) -> list:
+    def list(couple_id, filters) -> list:
         response = Core.query(
             KeyConditionExpression='PK = :pk AND begins_with(SK, :sk)',
             ExpressionAttributeValues={
@@ -21,6 +21,16 @@ class Couple:
                 ':sk': f'COUPLE#{couple_id}',
             },
             FilterExpression=filters,
-            limit=limit,
         )
         return response['Items'] if 'Items' in response and len(response['Items']) > 0 else []
+
+    @staticmethod
+    def get_results(couple_id) -> list:
+        response = Core.query(
+            KeyConditionExpression='PK = :pk AND SK = :sk',
+            ExpressionAttributeValues={
+                ':pk': 'METADATA#COUPLE',
+                ':sk': f'RESULTS#{couple_id}',
+            },
+        )
+        return response['Items'][0] if 'Items' in response and len(response['Items']) > 0 else {}

@@ -32,7 +32,7 @@ def lambda_handler(event, context):
         'name': item['Name'],
         'place': item['Place'],
         'classes': item['Classes'],
-    } for item in Competition.list(start_date, end_date, Attr('Name').contains(name) & Attr('Place').contains(place)) if class_id == '' or class_id in item['Classes']]
+    } for item in sorted(Competition.list(start_date, end_date, Attr('Name').contains(name) & Attr('Place').contains(place)), key=lambda x:x['SK'], reverse=True) if class_id == '' or class_id in item['Classes']]
 
     response = {
         "statusCode": 200,

@@ -22,7 +22,7 @@ def lambda_handler(event, context):
         }
 
     # TODO: 最大件数を指定する？
-    couple_results = Couple.get(couple_id)
+    couple_results = Couple.get_results(couple_id)
     response_data = {
         'couple_id': couple_id,
         'leader_name': couple_results.get('Leader', ''),

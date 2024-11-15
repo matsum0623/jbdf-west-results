@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import { useState } from "react";
 import { getData } from "../lib/fetchApi";
+import { Loading } from "../components/Utils";
 
 export const clientLoader = async () => {
   return {}
@@ -30,7 +31,16 @@ export default function Couple() {
   const [info_leader_name, setInfoLeaderName] = useState("");
   const [info_partner_name, setInfoPartnerName] = useState("");
 
+  const [is_loading, setIsLoading] = useState(false);
+  const [is_error, setIsError] = useState(false);
+
   const searchResults = async () => {
+    if(search_couple_id == '' && search_leader_name == '' && search_partner_name == ''){
+      setIsError(true)
+      return
+    }
+    setIsError(false)
+    setIsLoading(true)
     const path_parameter = '?' +
       (search_couple_id != '' ? `&couple_id=${search_couple_id}` : '') +
       (search_leader_name != '' ? `&leader_name=${search_leader_name}` : '') +
@@ -38,6 +48,7 @@ export default function Couple() {
     // ここでデータ取得して結果を切り替える
     const search_data = await getData(`/couple${path_parameter}`)
     setResultData(search_data)
+    setIsLoading(false)
   }
 
   const resetSearchParams = () => {
@@ -47,6 +58,7 @@ export default function Couple() {
   }
 
   const setInfo = (couple_id:string, leader_name:string, partner_name:string) => {
+    console.log(couple_id, leader_name, partner_name)
     setInfoCoupleId(couple_id)
     setInfoLeaderName(leader_name)
     setInfoPartnerName(partner_name)
@@ -55,6 +67,7 @@ export default function Couple() {
 
   return (
     <>
+      {Loading(is_loading)}
       <div className="sticky top-16 z-40 bg-white">
         <div className="flex justify-between pt-2">
           <h1 className="font-bold text-3xl">カップル{details_flag ? "詳細" : "検索"}</h1>
@@ -78,9 +91,16 @@ export default function Couple() {
             </div>
           </div>
           {!details_flag &&
-            <div className="flex justify-end mt-2">
-              <button type="button" className="btn-cancel mx-2" onClick={() => resetSearchParams()}>クリア</button>
-              <button type="submit" className="btn-submit mx-2">検索</button>
+            <div className="flex justify-between mt-2">
+              <div className="pl-10 py-2 text-red-600">
+                {is_error && <span>
+                  ※検索条件をどれか一つ以上入力してください
+                </span>}
+              </div>
+              <div>
+                <button type="button" className="btn-cancel mx-2" onClick={() => resetSearchParams()}>クリア</button>
+                <button type="submit" className="btn-submit mx-2">検索</button>
+              </div>
             </div>
           }
         </Form>

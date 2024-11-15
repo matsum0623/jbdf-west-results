@@ -3,11 +3,12 @@ import {
   Link,
   Outlet,
   useMatches,
-  useNavigate
+  useNavigate,
 } from "@remix-run/react";
 import { useState } from "react";
 import { getData } from "../lib/fetchApi";
 import { class_names } from "../lib/const";
+import { Loading } from "../components/Utils";
 
 export const clientAction = async () => {
   return {}
@@ -30,24 +31,28 @@ export default function Index() {
   const [info_place, setInfoPlace] = useState("");
   const [info_class, setInfoClass] = useState("");
 
+  const [is_loading, setIsLoading] = useState(false);
+
 
   const searchResults = async () => {
+    setIsLoading(true)
     const path_parameter = '?' +
       (search_start_date != '' ? `&start_date=${search_start_date}` : '') +
       (search_end_date != '' ? `&end_date=${search_end_date}` : '') +
       (search_name != '' ? `&name=${search_name}` : '') +
       (search_place != '' ? `&place=${search_place}` : '') +
-      (search_class != 'ALL' ? `&class_id=${search_class}` : '')
+      (search_class != '' ? `&class_id=${search_class}` : '')
     // ここでデータ取得して結果を切り替える
     const search_data = await getData(`/results${path_parameter}`)
     setResultData(search_data)
+    setIsLoading(false)
   }
   const resetSearchParams = () => {
     setSearchStartDate("");
     setSearchEndDate("");
     setSearchName("");
     setSearchPlace("");
-    setSearchClass("ALL")
+    setSearchClass("")
     setResultData([]);
   }
 
@@ -60,6 +65,7 @@ export default function Index() {
 
   return (
     <>
+      {Loading(is_loading)}
       <div className="sticky top-16 z-40 bg-white">
         <div className="flex justify-between pt-2">
           <h1 className="font-bold text-3xl">試合結果{details_flag ? "詳細" : "検索"}</h1>
@@ -112,6 +118,7 @@ export default function Index() {
           <Outlet context={{
             list: result_data,
             set_info: setInfo,
+            is_loading: is_loading,
           }}/>
         </div>
       </div>

@@ -448,8 +448,9 @@ def batch_write(info, player):
         for player_id, player_data in player.items():
             if player_ct % 100 == 0:
                 print(player_ct)
+            # 試合結果の登録
             res = table.query(
-                KeyConditionExpression=Key('PK').eq('METADATA#COUPLE') & Key('SK').eq(f'COUPLE#{player_id}')
+                KeyConditionExpression=Key('PK').eq('METADATA#COUPLE') & Key('SK').eq(f'RESULTS#{player_id}')
             )
             if len(res['Items']) > 0:
                 over_write_item = res['Items'][0]['Results']
@@ -460,9 +461,7 @@ def batch_write(info, player):
                 bw.put_item(
                     Item={
                         'PK': 'METADATA#COUPLE',
-                        'SK': f'COUPLE#{player_id}',
-                        'Leader': last_competition[1]['Leader'],
-                        'Partner': last_competition[1]['Partner'],
+                        'SK': f'RESULTS#{player_id}',
                         'Results': over_write_item,
                     }
                 )
@@ -470,12 +469,20 @@ def batch_write(info, player):
                 bw.put_item(
                     Item={
                         'PK': 'METADATA#COUPLE',
-                        'SK': f'COUPLE#{player_id}',
-                        'Leader': last_competition[1]['Leader'],
-                        'Partner': last_competition[1]['Partner'],
+                        'SK': f'RESULTS#{player_id}',
                         'Results': player_data,
                     }
                 )
+            # カップル情報の登録
+            competition_data = list(player_data.values())[0]
+            bw.put_item(
+                Item={
+                    'PK': 'METADATA#COUPLE',
+                    'SK': f'COUPLE#{player_id}',
+                    'Leader': competition_data.get('Leader', ''),
+                    'Partner': competition_data.get('Partner', ''),
+                }
+            )
             player_ct += 1
         print(info_ct)
 

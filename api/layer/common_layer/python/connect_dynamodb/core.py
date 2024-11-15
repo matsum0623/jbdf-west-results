@@ -13,16 +13,13 @@ table = dynamo.Table(table_name)
 
 class Core:
   @staticmethod
-  def query(KeyConditionExpression, ExpressionAttributeValues, FilterExpression=None, limit=None):
+  def query(KeyConditionExpression, ExpressionAttributeValues, FilterExpression=None):
     options = {
       'KeyConditionExpression': KeyConditionExpression,
       'ExpressionAttributeValues': ExpressionAttributeValues,
     }
     if FilterExpression is not None:
       options['FilterExpression'] = FilterExpression
-    if limit is not None and FilterExpression is None:
-      # フィルターがある場合はlimitを使わない
-      options['Limit'] = limit
 
     return table.query(**options)
 

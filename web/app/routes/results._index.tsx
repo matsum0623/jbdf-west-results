@@ -11,7 +11,8 @@ import {
 export default function Index() {
   const context: {
     list: object[],
-    set_info(dt: string, name: string, place: string, class_name: string): void;
+    set_info(dt: string, name: string, place: string, class_name: string): void,
+    is_loading: boolean,
   } = useOutletContext();
   const data_list: results_data[] = []
   if(context){
@@ -60,7 +61,7 @@ export default function Index() {
               {data_list.map((data: results_data) => (
                 <tr key={data.date} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {data.date}
+                    {`${data.date.slice(0, 4)}/${data.date.slice(4, 6)}/${data.date.slice(6, 8)}`}
                   </th>
                   <td className="px-6 py-4">
                     {data.name}

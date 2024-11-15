@@ -2,11 +2,10 @@ import {
   ClientLoaderFunctionArgs,
     Link,
     useLoaderData,
-    useOutletContext,
 } from "@remix-run/react";
 import { SortButton } from "../components/Utils";
 import { getData } from "../lib/fetchApi";
-import { class_names } from "~/lib/const";
+import { class_names } from "../lib/const";
 
 export const clientLoader = async ({
   params,
@@ -16,12 +15,6 @@ export const clientLoader = async ({
 
 export default function Index() {
   const data:{couple_id: string, leader_name:string, partner_name:string, results_list: couple_results[]} = useLoaderData<typeof clientLoader>()
-
-  const context: {
-    list: object[],
-    set_info(couple_id:string, leader_name:string, partner_name:string): void;
-  } = useOutletContext();
-  context.set_info(data.couple_id, data.leader_name, data.partner_name);
 
   return (
     <>
