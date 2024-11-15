@@ -75,37 +75,37 @@ export default function Index() {
           <div className="sm:flex gap-2 mx-2 sm:mt-3 sm:ml-2">
             <div className="flex">
               <div className={details_flag ? 'hidden' : ''}>
-                <label htmlFor="start_date" className="text-xs sm:text-base">開始日付</label>
+                <label htmlFor="start_date" className="text-sm sm:text-base">開始日付</label>
                 <input type="date" name="start_date" id="start_date" value={search_start_date} className="sm:ml-2 input w-44" hidden={details_flag} onChange={(e) => setSearchStartDate(e.target.value)}/>
               </div>
               <div className={details_flag ? 'hidden' : ''}>
-                <label htmlFor="end_date" className="text-xs sm:text-base">終了日付</label>
+                <label htmlFor="end_date" className="text-sm sm:text-base">終了日付</label>
                 <input type="date" name="end_date" id="end_date" value={search_end_date} className="ml-2 input w-44" hidden={details_flag} onChange={(e) => setSearchEndDate(e.target.value)}/>
               </div>
             </div>
             <div className="flex">
               <div className={!details_flag ? 'hidden' : ''}>
-                <label htmlFor="date" className="text-xs sm:text-base">日付</label>
+                <label htmlFor="date" className="text-sm sm:text-base">日付</label>
                 <input type="text" name="date" id="date" value={info_date.replace(/(\d{4})(\d{2})(\d{2})/, '$1/$2/$3')} className="sm:ml-2 input w-44" disabled/>
               </div>
               <div className={!details_flag ? 'hidden' : 'block sm:hidden'}>
-                <label htmlFor="class_id" className="text-xs sm:text-base">クラス</label>
+                <label htmlFor="class_id" className="text-sm sm:text-base">クラス</label>
                 <input type="text" name="date" id="date" value={info_class} className="ml-2 input w-44" disabled/>
               </div>
             </div>
 
             <div className="flex">
               <div className="sm:ml-6">
-                <label htmlFor="name" className="text-xs sm:text-base">競技会名称</label>
+                <label htmlFor="name" className="text-sm sm:text-base">競技会名称</label>
                 <input type="text" name="name" id="name" value={details_flag ? info_name : search_name} className="sm:ml-2 input w-44" disabled={details_flag} onChange={(e) => setSearchName(e.target.value)}/>
               </div>
               <div className="">
-                <label htmlFor="place" className="text-xs sm:text-base">開催場所</label>
+                <label htmlFor="place" className="text-sm sm:text-base">開催場所</label>
                 <input type="text" name="place" id="place" value={details_flag ? info_place : search_place} className="ml-2 input w-44" disabled={details_flag} onChange={(e) => setSearchPlace(e.target.value)}/>
               </div>
             </div>
             <div className={!details_flag ? 'hidden' : 'hidden sm:block'}>
-              <label htmlFor="class_id" className="text-xs sm:text-base">クラス</label>
+              <label htmlFor="class_id" className="text-sm sm:text-base">クラス</label>
               <input type="text" name="date" id="date" value={info_class} className="ml-2 input w-44" disabled/>
             </div>
 
