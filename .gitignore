@@ -4,3 +4,4 @@ web/node_modules/*
 api/tests/*
 web/app/config.json
 api/.aws-sam/*
+web/build/*
