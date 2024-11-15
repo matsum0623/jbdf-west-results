@@ -7,6 +7,7 @@ import {
   SortButton,
   ClassLink,
 } from "../components/Utils";
+import { useState } from "react";
 
 export default function Index() {
   const context: {
@@ -24,52 +25,78 @@ export default function Index() {
     context.set_info(dt, name, place, class_name);
   }
 
+  const [modal_open, setModalOpen] = useState(false);
+  const [modal_date, setModalDate] = useState("");
+  const [modal_name, setModalName] = useState("");
+  const [modal_place, setModalPlace] = useState("");
+  const [modal_classes, setModalClasses] = useState<string[]>([]);
+  const openDetailModal = (date:string, name:string, place:string, classes:string[]) => {
+    setModalOpen(true)
+    setModalDate(date)
+    setModalName(name)
+    setModalPlace(place)
+    setModalClasses(classes)
+  }
+
   return (
     <>
-      <div className="mt-8 mx-4">
+      <div className="mt-8 sm:mx-4">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3">
-                <div className="flex items-center">
+                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
+                  <div className="flex items-center">
                     日付
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
                   <div className="flex items-center">
                     競技会名称
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
                   <div className="flex items-center">
                     開催場所
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
                   <div className="flex items-center">
                     クラス
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
+
+                <th scope="col" className="sm:px-6 sm:py-3 table-cell sm:hidden">
+                  <div className="text-center">
+                    日付
+                  </div>
+                  <div className="text-center">
+                    競技会名称
+                  </div>
+                  <div className="text-center">
+                    開催場所
+                  </div>
+                </th>
+
               </tr>
             </thead>
             <tbody>
               {data_list.map((data: results_data) => (
-                <tr key={data.date} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr key={data.date} className="bg-white border-b">
+                  <th scope="row" className="px-6 py-4 sm:font-medium text-gray-900 whitespace-nowrap hidden sm:table-cell">
                     {`${data.date.slice(0, 4)}/${data.date.slice(4, 6)}/${data.date.slice(6, 8)}`}
                   </th>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden sm:table-cell">
                     {data.name}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden sm:table-cell">
                     {data.place}
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-6 py-4 text-center hidden sm:table-cell">
                     <table>
                       <thead>
                         <tr className="font-bold">
@@ -128,12 +155,110 @@ export default function Index() {
                       </tbody>
                     </table>
                   </td>
+
+                  <td className="py-2  text-gray-900 whitespace-nowrap table-cell sm:hidden" onClick={() => openDetailModal(data.date, data.name, data.place, data.classes)}>
+                    <div className="text-center">
+                      {`${data.date.slice(0, 4)}/${data.date.slice(4, 6)}/${data.date.slice(6, 8)}`}
+                    </div>
+                    <div className="text-center">
+                      {data.name}
+                    </div>
+                    <div className="text-center">
+                      {data.place}
+                    </div>
+                  </td>
+
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {/* スマホ用のクラス選択モーダル */}
+        {(modal_open) &&
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+          <div id="detail-modal" tabIndex={-1} className="modal-back-ground" onClick={(e) => {
+              if((e.target as HTMLElement).id == 'detail-modal'){
+                setModalOpen(false)
+              }
+            }}>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    開催クラス一覧
+                  </h3>
+                  <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" onClick={() => setModalOpen(false)}>
+                    <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" strokeLinecap={"round"} strokeLinejoin={"round"} strokeWidth={2} d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span className="sr-only">Close modal</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <table>
+                    <thead>
+                      <tr className="font-bold">
+                        <td></td>
+                        <td>プロ</td>
+                        <td className="border-l-2 border-gray-600/50">アマ</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="font-bold">B</td>
+                        <td className="border-l-2 border-gray-600/50">
+                          <div className="flex">
+                            <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBO', modal_classes.includes('PBO'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('A級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBA', modal_classes.includes('PBA'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBB', modal_classes.includes('PBB'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBC', modal_classes.includes('PBC'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBD', modal_classes.includes('PBD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBE', modal_classes.includes('PBE'), setInfo)}</div>
+                          </div>
+                        </td>
+                        <td className="border-l-2 border-gray-600/50">
+                          <div className="flex">
+                            <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABO', modal_classes.includes('ABO'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('A級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABA', modal_classes.includes('ABA'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABB', modal_classes.includes('ABB'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABC', modal_classes.includes('ABC'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABD', modal_classes.includes('ABD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABE', modal_classes.includes('ABE'), setInfo)}</div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">L</td>
+                        <td className="border-l-2 border-gray-600/50">
+                          <div className="flex">
+                            <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLO', modal_classes.includes('PLO'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('A級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLA', modal_classes.includes('PLA'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLB', modal_classes.includes('PLB'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLC', modal_classes.includes('PLC'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLD', modal_classes.includes('PLD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLE', modal_classes.includes('PLE'), setInfo)}</div>
+                          </div>
+                        </td>
+                        <td className="border-l-2 border-gray-600/50">
+                          <div className="flex">
+                            <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALO', modal_classes.includes('ALO'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('A級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALA', modal_classes.includes('ALA'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALB', modal_classes.includes('ALB'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALC', modal_classes.includes('ALC'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALD', modal_classes.includes('ALD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALE', modal_classes.includes('ALE'), setInfo)}</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       </div>
+
     </>
   );
 }

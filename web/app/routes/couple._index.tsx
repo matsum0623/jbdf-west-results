@@ -31,8 +31,8 @@ export default function Index() {
     <>
       <div className="mt-8 sm:mx-4">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                 <div className="flex items-center">
@@ -64,8 +64,8 @@ export default function Index() {
             </thead>
             <tbody>
               {data_list.map((data: couple_info) => (
-                <tr key={data.couple_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr key={data.couple_id} className="bg-white border-b">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     {data.couple_id}
                   </th>
                   <td className="px-6 py-4">
@@ -75,7 +75,7 @@ export default function Index() {
                     {data.partner_name}
                   </td>
                   <td className="px-6 py-4">
-                    <Link to={`/couple/${data.couple_id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    <Link to={`/couple/${data.couple_id}`} className="font-medium text-blue-600 hover:underline"
                       onClick={() => setInfo(data.couple_id, data.leader_name, data.partner_name)}>詳細</Link>
                   </td>
                 </tr>

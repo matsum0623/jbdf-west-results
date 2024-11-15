@@ -4,7 +4,7 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
@@ -24,4 +24,34 @@ body {
   .loading {
     @apply absolute flex justify-center align-middle h-full bg-white bg-opacity-50 top-0 left-0 right-0
   }
+
+  .modal-back-ground {
+    @apply overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50
+  }
+
+  .modal-dialog {
+    @apply relative p-4 w-full max-w-xl max-h-full m-auto top-32
+  }
+
+  .modal-content {
+    @apply relative bg-white rounded-lg shadow
+  }
+
+  .modal-header {
+    @apply flex items-center justify-between p-4 md:p-5 border-b rounded-t
+  }
+
+  .modal-body {
+    @apply p-4 md:p-5 space-y-4
+  }
+
+  .modal-footer {
+    @apply flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end
+  }
+
+  .close-svg {
+    @apply text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center
+  }
+
+
 }

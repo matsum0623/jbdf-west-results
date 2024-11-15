@@ -20,8 +20,8 @@ export default function Index() {
     <>
       <div className="mt-8 mx-4">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                 <div className="flex items-center">
@@ -63,7 +63,7 @@ export default function Index() {
             </thead>
             <tbody>
               {data.results_list.map((result) => (
-                <tr key={result.date + result.class_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr key={result.date + result.class_id} className="bg-white border-b">
                   <td className="px-6 py-4">
                     {`${result.date.slice(0, 4)}/${result.date.slice(4, 6)}/${result.date.slice(6, 8)}`}
                   </td>
