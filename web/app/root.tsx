@@ -1,6 +1,7 @@
 import {
   Links,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -23,6 +24,19 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "JBDF西部 試合結果" },
+    {
+      property: "format-detection",
+      content: "telephone=no",
+    },
+    {
+      name: "description",
+      content: "JBDF西部の試合結果を検索するサイトです。",
+    },
+  ];
+};
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
