@@ -40,37 +40,37 @@ export default function Index() {
 
   return (
     <>
-      <div className="mt-8 sm:mx-4">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="xl:mt-8 xl:mx-4">
+        <div className="relative overflow-x-auto shadow-md xl:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
-                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
                   <div className="flex items-center">
                     日付
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
                   <div className="flex items-center">
                     競技会名称
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
                   <div className="flex items-center">
                     開催場所
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="sm:px-6 sm:py-3 hidden sm:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
                   <div className="flex items-center">
                     クラス
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
 
-                <th scope="col" className="sm:px-6 sm:py-3 table-cell sm:hidden">
+                <th scope="col" className="xl:px-6 xl:py-3 table-cell xl:hidden">
                   <div className="text-center">
                     日付
                   </div>
@@ -80,6 +80,9 @@ export default function Index() {
                   <div className="text-center">
                     開催場所
                   </div>
+                </th>
+                <th className="xl:hidden">
+                  HP
                 </th>
 
               </tr>
@@ -87,16 +90,16 @@ export default function Index() {
             <tbody>
               {data_list.map((data: results_data) => (
                 <tr key={data.date} className="bg-white border-b">
-                  <th scope="row" className="px-6 py-4 sm:font-medium text-gray-900 whitespace-nowrap hidden sm:table-cell">
+                  <th scope="row" className="px-6 py-4 xl:font-medium text-gray-900 whitespace-nowrap hidden xl:table-cell">
                     {`${data.date.slice(0, 4)}/${data.date.slice(4, 6)}/${data.date.slice(6, 8)}`}
                   </th>
-                  <td className="px-6 py-4 hidden sm:table-cell">
-                    {data.name}
+                  <td className="px-6 py-4 hidden xl:table-cell">
+                    <a href={`http://jbdf-west.jp/compe/data/${data.date}/result/main.php`} target="_blank" rel="noreferrer" className="underline">{data.name}</a>
                   </td>
-                  <td className="px-6 py-4 hidden sm:table-cell">
+                  <td className="px-6 py-4 hidden xl:table-cell">
                     {data.place}
                   </td>
-                  <td className="px-6 py-4 text-center hidden sm:table-cell">
+                  <td className="px-6 py-4 text-center hidden xl:table-cell">
                     <table>
                       <thead>
                         <tr className="font-bold">
@@ -156,16 +159,19 @@ export default function Index() {
                     </table>
                   </td>
 
-                  <td className="py-2  text-gray-900 whitespace-nowrap table-cell sm:hidden" onClick={() => openDetailModal(data.date, data.name, data.place, data.classes)}>
+                  <td className="py-2  text-gray-900 whitespace-nowrap table-cell xl:hidden w-8/12" onClick={() => openDetailModal(data.date, data.name, data.place, data.classes)}>
                     <div className="text-center">
                       {`${data.date.slice(0, 4)}/${data.date.slice(4, 6)}/${data.date.slice(6, 8)}`}
                     </div>
-                    <div className="text-center">
+                    <div className="text-center overflow-hidden">
                       {data.name}
                     </div>
-                    <div className="text-center">
+                    <div className="text-center overflow-hidden">
                       {data.place}
                     </div>
+                  </td>
+                  <td className="xl:hidden">
+                    <a href={`http://jbdf-west.jp/compe/data/${data.date}/result/main.php`} target="_blank" rel="noreferrer" className="underline text-blue-600">HP</a>
                   </td>
 
                 </tr>

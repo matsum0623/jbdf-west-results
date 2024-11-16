@@ -23,45 +23,45 @@ export default function Index() {
   console.log("data:", data);
   return (
     <>
-      <div className="mt-8 mx-4">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="xl:mt-8 xl:mx-4">
+        <div className="relative overflow-x-auto shadow-md xl:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
-                <th scope="col" className="py-1 sm:px-6 sm:py-3">
+                <th scope="col" className="py-1 xl:px-6 xl:py-3">
                   <div className="flex items-center justify-center">
                     選手ID
-                    <Link to="/results" className="hidden sm:block">{SortButton()}</Link>
+                    <Link to="/results" className="hidden xl:block">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="py-1 sm:px-6 sm:py-3">
+                <th scope="col" className="py-1 xl:px-6 xl:py-3">
                   <div className="flex items-center justify-center">
                     リーダー
-                    <Link to="/results" className="hidden sm:block">{SortButton()}</Link>
+                    <Link to="/results" className="hidden xl:block">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="py-1 sm:px-6 sm:py-3">
+                <th scope="col" className="py-1 xl:px-6 xl:py-3">
                   <div className="flex items-center justify-center">
                     パートナー
-                    <Link to="/results" className="hidden sm:block">{SortButton()}</Link>
+                    <Link to="/results" className="hidden xl:block">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="py-1 sm:px-6 sm:py-3 hidden sm:table-cell">
+                <th scope="col" className="py-1 xl:px-6 xl:py-3 hidden xl:table-cell">
                   <div className="flex items-center justify-center">
                     背番号
-                    <Link to="/results" className="hidden sm:block">{SortButton()}</Link>
+                    <Link to="/results" className="hidden xl:block">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="py-1 sm:px-6 sm:py-3 hidden sm:table-cell">
+                <th scope="col" className="py-1 xl:px-6 xl:py-3 hidden xl:table-cell">
                   <div className="flex items-center justify-center">
                     所属級
-                    <Link to="/results" className="hidden sm:block">{SortButton()}</Link>
+                    <Link to="/results" className="hidden xl:block">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="py-1 sm:px-6 sm:py-3">
+                <th scope="col" className="py-1 xl:px-6 xl:py-3">
                   <div className="flex items-center justify-center">
                     最終結果
-                    <Link to="/results" className="hidden sm:block">{SortButton()}</Link>
+                    <Link to="/results" className="hidden xl:block">{SortButton()}</Link>
                   </div>
                 </th>
               </tr>
@@ -69,22 +69,22 @@ export default function Index() {
             <tbody>
               {data.results_list.map((result) => (
                 <tr key={result.couple_id} className="bg-white border-b">
-                  <th scope="row" className="sm:px-6 sm:py-4 font-medium text-gray-900 whitespace-nowrap">
+                  <th scope="row" className="py-2 xl:px-6 xl:py-4 font-medium text-gray-900 whitespace-nowrap text-center">
                     <Link to={`/couple/${result.couple_id}`} className="underline">{result.couple_id}</Link>
                   </th>
-                  <td className="sm:px-6 sm:py-4">
+                  <td className="py-2 xl:px-6 xl:py-4 text-center">
                     {result.leader_name}
                   </td>
-                  <td className="sm:px-6 sm:py-4">
+                  <td className="py-2 xl:px-6 xl:py-4 text-center">
                     {result.partner_name}
                   </td>
-                  <td className="sm:px-6 sm:py-4 hidden sm:table-cell">
+                  <td className="xl:px-6 xl:py-4 hidden xl:table-cell">
                     {result.back_number}
                   </td>
-                  <td className="sm:px-6 sm:py-4 hidden sm:table-cell">
+                  <td className="xl:px-6 xl:py-4 hidden xl:table-cell">
                     {result.rank}
                   </td>
-                  <td className="sm:px-6 sm:py-4">
+                  <td className="py-2 xl:px-6 xl:py-4  text-center">
                     {result.result}
                   </td>
                 </tr>

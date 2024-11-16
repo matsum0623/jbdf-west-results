@@ -29,29 +29,29 @@ export default function Index() {
 
   return (
     <>
-      <div className="mt-8 sm:mx-4">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="xl:mt-8 xl:mx-4">
+        <div className="relative overflow-x-auto shadow-md xl:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                 <div className="flex items-center">
-                    <span className="hidden sm:block">選手番号</span>
-                    <span className="block sm:hidden">ID</span>
+                    <span className="hidden xl:block">選手番号</span>
+                    <span className="block xl:hidden">ID</span>
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
                   <div className="flex items-center">
-                    <span className="hidden sm:block">リーダー名</span>
-                    <span className="block sm:hidden">L</span>
+                    <span className="hidden xl:block">リーダー名</span>
+                    <span className="block xl:hidden">L</span>
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
                   <div className="flex items-center">
-                    <span className="hidden sm:block">パートナー名</span>
-                    <span className="block sm:hidden">P</span>
+                    <span className="hidden xl:block">パートナー名</span>
+                    <span className="block xl:hidden">P</span>
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
@@ -65,16 +65,16 @@ export default function Index() {
             <tbody>
               {data_list.map((data: couple_info) => (
                 <tr key={data.couple_id} className="bg-white border-b">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  <th scope="row" className="py-2 xl:px-6 xl:py-4 font-medium text-gray-900 whitespace-nowrap text-center">
                     {data.couple_id}
                   </th>
-                  <td className="px-6 py-4">
+                  <td className="py-2 xl:px-6 xl:py-4 text-center">
                     {data.leader_name}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="py-2 xl:px-6 xl:py-4 text-center">
                     {data.partner_name}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="py-2 xl:px-6 xl:py-4 text-center">
                     <Link to={`/couple/${data.couple_id}`} className="font-medium text-blue-600 hover:underline"
                       onClick={() => setInfo(data.couple_id, data.leader_name, data.partner_name)}>詳細</Link>
                   </td>

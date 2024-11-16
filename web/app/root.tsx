@@ -59,7 +59,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <div className="w-full sm:w-4/5 m-auto">
+      <div className="w-full xl:w-4/5 m-auto">
         <Outlet />
       </div>
     </>

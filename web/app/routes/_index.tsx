@@ -15,7 +15,7 @@ export const clientLoader = async () => {
 
 export default function Index() {
   return (
-    <div className="w-full sm:w-4/5 m-auto h-dvh">
+    <div className="w-full xl:w-4/5 m-auto h-dvh">
       <Outlet />
     </div>
   );
