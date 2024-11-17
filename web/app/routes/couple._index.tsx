@@ -27,28 +27,28 @@ export default function Index() {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                     <span className="hidden xl:block">選手番号</span>
                     <span className="block xl:hidden">ID</span>
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center">
                     <span className="hidden xl:block">リーダー名</span>
                     <span className="block xl:hidden">L</span>
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center">
                     <span className="hidden xl:block">パートナー名</span>
                     <span className="block xl:hidden">P</span>
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center">
                     詳細
                   </div>
                 </th>
