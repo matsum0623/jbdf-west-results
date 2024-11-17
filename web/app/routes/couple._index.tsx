@@ -4,14 +4,6 @@ import {
 } from "@remix-run/react";
 import { SortButton } from "../components/Utils";
 
-export const clientLoader = async () => {
-  return {};
-}
-
-export const clientAction = async () => {
-  return {};
-}
-
 export default function Index() {
   const context: {
     list: object[],

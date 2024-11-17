@@ -23,10 +23,11 @@ def lambda_handler(event, context):
 
     # TODO: 最大件数を指定する？
     couple_results = Couple.get_results(couple_id)
+    couple_info = Couple.get(couple_id)
     response_data = {
         'couple_id': couple_id,
-        'leader_name': couple_results.get('Leader', ''),
-        'partner_name': couple_results.get('Partner', ''),
+        'leader_name': couple_info.get('Leader', ''),
+        'partner_name': couple_info.get('Partner', ''),
         'results_list': [{
             'date': key.split('#')[0],
             'class_id': key.split('#')[1],

@@ -1,11 +1,13 @@
 import {
   ClientLoaderFunctionArgs,
-    Link,
-    useLoaderData,
+  Link,
+  useLoaderData,
+  useOutletContext,
 } from "@remix-run/react";
 import { SortButton } from "../components/Utils";
 import { getData } from "../lib/fetchApi";
 import { class_names } from "../lib/const";
+import { useEffect } from "react";
 
 export const clientLoader = async ({
   params,
@@ -15,6 +17,19 @@ export const clientLoader = async ({
 
 export default function Index() {
   const data:{couple_id: string, leader_name:string, partner_name:string, results_list: couple_results[]} = useLoaderData<typeof clientLoader>()
+
+  const context: {
+    filter_type: string,
+    set_info(couple_id:string, leader_name:string, partner_name:string): void;
+  } = useOutletContext();
+
+  useEffect(() => {
+    context.set_info(data.couple_id, data.leader_name, data.partner_name);
+  })
+
+  const filterResults = (filter_type: string) => {
+    return filter_type == 'ALL' ? data.results_list : data.results_list.filter((result) => result.class_id.slice(1,2) === filter_type)
+  }
 
   return (
     <>
@@ -56,27 +71,27 @@ export default function Index() {
 
 
                 <th scope="col" className="px-6 py-3 hidden xl:table-cell">
-                  <div className="flex items-center">
+                  <div className="flex items-center text-center justify-center">
                     所属級
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3 hidden xl:table-cell">
-                  <div className="flex items-center">
+                  <div className="flex items-center text-center justify-center">
                     背番号
                     <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
-                <th scope="col" className="xl:px-6 xl:py-3">
-                  <div className="flex items-center w-14 justify-center">
+                <th scope="col" className="xl:px-6 xl:py-3 flex justify-center">
+                  <div>
                     結果
-                    <Link to="/results" className="hidden xl:table-cell">{SortButton()}</Link>
                   </div>
+                  <Link to="/results" className="hidden xl:table-cell">{SortButton()}</Link>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data.results_list.map((result) => (
+              {filterResults(context.filter_type).map((result) => (
                 <tr key={result.date + result.class_id} className="bg-white border-b">
                   <td className="px-6 py-4 hidden xl:table-cell">
                     {`${result.date.slice(0, 4)}/${result.date.slice(4, 6)}/${result.date.slice(6, 8)}`}
@@ -100,10 +115,10 @@ export default function Index() {
                     </div>
                   </td>
 
-                  <td className="px-6 py-4 hidden xl:table-cell">
+                  <td className="px-6 py-4 hidden xl:table-cell text-center">
                     {result.rank}
                   </td>
-                  <td className="px-6 py-4 hidden xl:table-cell">
+                  <td className="px-6 py-4 hidden xl:table-cell text-center">
                     {result.back_number}
                   </td>
                   <td className="xl:px-6 xl:py-4 text-center">

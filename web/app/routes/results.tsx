@@ -10,10 +10,6 @@ import { getData } from "../lib/fetchApi";
 import { class_names } from "../lib/const";
 import { Loading } from "../components/Utils";
 
-export const clientAction = async () => {
-  return {}
-}
-
 export default function Index() {
   const matches = useMatches()
   const details_flag = !matches[2].id.includes('/results._index')
@@ -77,7 +73,7 @@ export default function Index() {
           {details_flag && <Link to="/#" className="underline ml-4 mt-2" onClick={() => navigate(-1)}>戻る</Link>}
         </div>
         <div className={is_search_hide && !details_flag ? 'hidden' : 'block'}>
-          <Form method="post" onSubmit={() => searchResults()}>
+          <Form onSubmit={() => searchResults()}>
             <div className="xl:flex gap-2 mx-2 xl:mt-3 xl:ml-2">
               <div className="flex">
                 <div className={details_flag ? 'hidden' : ''}>

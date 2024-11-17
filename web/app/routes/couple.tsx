@@ -9,13 +9,6 @@ import { useState } from "react";
 import { getData } from "../lib/fetchApi";
 import { Loading } from "../components/Utils";
 
-export const clientLoader = async () => {
-  return {}
-}
-export const clientAction = async () => {
-  return {}
-}
-
 export default function Couple() {
   const matches = useMatches()
   const details_flag = !matches[2].id.includes('/couple._index')
@@ -30,6 +23,7 @@ export default function Couple() {
   const [info_couple_id, setInfoCoupleId] = useState("");
   const [info_leader_name, setInfoLeaderName] = useState("");
   const [info_partner_name, setInfoPartnerName] = useState("");
+  const [filter_type, setFilterType] = useState("ALL");
 
   const [is_loading, setIsLoading] = useState(false);
   const [is_error, setIsError] = useState(false);
@@ -66,7 +60,6 @@ export default function Couple() {
     setInfoPartnerName(partner_name)
   }
 
-
   return (
     <>
       {Loading(is_loading)}
@@ -79,7 +72,7 @@ export default function Couple() {
           {details_flag && <Link to="/#" className="underline ml-4 mt-2" onClick={() => navigate(-1)}>戻る</Link>}
         </div>
         <div className={(is_search_hide && !details_flag) ? 'hidden' : 'block'}>
-          <Form method="post" onSubmit={() => searchResults()}>
+          <Form onSubmit={() => searchResults()}>
             <div className="xl:flex xl:gap-2 xl:mt-3 mx-2 xl:px-0 xl:ml-2">
               <div className="">
                 <label htmlFor="date" className="text-sm xl:text-base">選手番号</label>
@@ -93,6 +86,23 @@ export default function Couple() {
                 <div className="">
                   <label htmlFor="partner_name" className="text-sm xl:text-base">パートナー名</label>
                   <input type="text" name="partner_name" id="partner_name" value={details_flag ? info_partner_name : search_partner_name} className="ml-2 input w-44" disabled={details_flag} onChange={(e) => setSearchPartnerName(e.target.value)}/>
+                </div>
+              </div>
+              <div className="xl:ml-8">
+                <label htmlFor="filter" className="text-sm xl:text-base">絞り込み</label>
+                <div id="filter" className="flex gap-2">
+                  <div className="flex items-center">
+                    <input checked={filter_type=='ALL'} id="filter-radio-1" type="radio" value="ALL" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('ALL')}/>
+                    <label htmlFor="filter-radio-1" className="ms-2 text-sm font-medium text-gray-900">すべて</label>
+                  </div>
+                  <div className="flex items-center">
+                    <input checked={filter_type=='B'} id="filter-radio-2" type="radio" value="B" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('B')}/>
+                    <label htmlFor="filter-radio-2" className="ms-2 text-sm font-medium text-gray-900">ボールルーム</label>
+                  </div>
+                  <div className="flex items-center">
+                    <input checked={filter_type=='L'} id="filter-radio-3" type="radio" value="L" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('L')}/>
+                    <label htmlFor="filter-radio-3" className="ms-2 text-sm font-medium text-gray-900">ラテン</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,6 +126,7 @@ export default function Couple() {
         <Outlet context={{
           list: result_data,
           set_info: setInfo,
+          filter_type: filter_type,
         }}/>
       </div>
     </>

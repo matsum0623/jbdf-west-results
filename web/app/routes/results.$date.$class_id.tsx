@@ -6,21 +6,10 @@ import { getData } from "../lib/fetchApi";
 export const clientLoader = async ({
   params,
 }: ClientLoaderFunctionArgs) => {
-  const results_list:couple_result[] = await getData(`/results/${params.date}/${params.class_id}`)
-  return { results_list: results_list };
-}
-
-export const clientAction = async ({
-  request,
-  params,
-}: ClientLoaderFunctionArgs) => {
-  console.log("clientAction", request, params);
-  return { date: new Date() };
+  return await getData(`/results/${params.date}/${params.class_id}`)
 }
 
 export default function Index() {
-  const data = useLoaderData<typeof clientLoader>()
-  console.log("data:", data);
   return (
     <>
       <div className="xl:mt-8 xl:mx-4">
@@ -67,7 +56,7 @@ export default function Index() {
               </tr>
             </thead>
             <tbody>
-              {data.results_list.map((result) => (
+              {useLoaderData<typeof clientLoader>().map((result:couple_result) => (
                 <tr key={result.couple_id} className="bg-white border-b">
                   <th scope="row" className="py-2 xl:px-6 xl:py-4 font-medium text-gray-900 whitespace-nowrap text-center">
                     <Link to={`/couple/${result.couple_id}`} className="underline">{result.couple_id}</Link>
@@ -78,10 +67,10 @@ export default function Index() {
                   <td className="py-2 xl:px-6 xl:py-4 text-center">
                     {result.partner_name}
                   </td>
-                  <td className="xl:px-6 xl:py-4 hidden xl:table-cell">
+                  <td className="xl:px-6 xl:py-4 hidden xl:table-cell text-center">
                     {result.back_number}
                   </td>
-                  <td className="xl:px-6 xl:py-4 hidden xl:table-cell">
+                  <td className="xl:px-6 xl:py-4 hidden xl:table-cell text-center">
                     {result.rank}
                   </td>
                   <td className="py-2 xl:px-6 xl:py-4  text-center">
