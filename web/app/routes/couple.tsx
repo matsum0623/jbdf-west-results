@@ -88,23 +88,25 @@ export default function Couple() {
                   <input type="text" name="partner_name" id="partner_name" value={details_flag ? info_partner_name : search_partner_name} className="ml-2 input w-44" disabled={details_flag} onChange={(e) => setSearchPartnerName(e.target.value)}/>
                 </div>
               </div>
-              <div className="xl:ml-8">
-                <label htmlFor="filter" className="text-sm xl:text-base">絞り込み</label>
-                <div id="filter" className="flex gap-2">
-                  <div className="flex items-center">
-                    <input checked={filter_type=='ALL'} id="filter-radio-1" type="radio" value="ALL" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('ALL')}/>
-                    <label htmlFor="filter-radio-1" className="ms-2 text-sm font-medium text-gray-900">すべて</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input checked={filter_type=='B'} id="filter-radio-2" type="radio" value="B" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('B')}/>
-                    <label htmlFor="filter-radio-2" className="ms-2 text-sm font-medium text-gray-900">ボールルーム</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input checked={filter_type=='L'} id="filter-radio-3" type="radio" value="L" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('L')}/>
-                    <label htmlFor="filter-radio-3" className="ms-2 text-sm font-medium text-gray-900">ラテン</label>
+              {details_flag &&
+                <div className="xl:ml-8">
+                  <label htmlFor="filter" className="text-sm xl:text-base">絞り込み</label>
+                  <div id="filter" className="flex gap-2">
+                    <div className="flex items-center">
+                      <input checked={filter_type=='ALL'} id="filter-radio-1" type="radio" value="ALL" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('ALL')}/>
+                      <label htmlFor="filter-radio-1" className="ms-2 text-sm font-medium text-gray-900">すべて</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input checked={filter_type=='B'} id="filter-radio-2" type="radio" value="B" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('B')}/>
+                      <label htmlFor="filter-radio-2" className="ms-2 text-sm font-medium text-gray-900">ボールルーム</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input checked={filter_type=='L'} id="filter-radio-3" type="radio" value="L" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" onChange={() => setFilterType('L')}/>
+                      <label htmlFor="filter-radio-3" className="ms-2 text-sm font-medium text-gray-900">ラテン</label>
+                    </div>
                   </div>
                 </div>
-              </div>
+              }
             </div>
             {!details_flag &&
               <div className="flex justify-between mt-2">
