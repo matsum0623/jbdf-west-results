@@ -118,6 +118,7 @@ export default function Index() {
                               <div className="p-0.5">{ClassLink('B級', data.date.replaceAll('-', ''), data.name, data.place, 'PBB', data.classes.includes('PBB'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('C級', data.date.replaceAll('-', ''), data.name, data.place, 'PBC', data.classes.includes('PBC'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('D級', data.date.replaceAll('-', ''), data.name, data.place, 'PBD', data.classes.includes('PBD'), setInfo)}</div>
+                              <div className="p-0.5">{ClassLink('DE級', data.date.replaceAll('-', ''), data.name, data.place, 'PBDE', data.classes.includes('PBDE'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('E級', data.date.replaceAll('-', ''), data.name, data.place, 'PBE', data.classes.includes('PBE'), setInfo)}</div>
                             </div>
                           </td>
@@ -128,7 +129,9 @@ export default function Index() {
                               <div className="p-0.5">{ClassLink('B級', data.date.replaceAll('-', ''), data.name, data.place, 'ABB', data.classes.includes('ABB'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('C級', data.date.replaceAll('-', ''), data.name, data.place, 'ABC', data.classes.includes('ABC'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('D級', data.date.replaceAll('-', ''), data.name, data.place, 'ABD', data.classes.includes('ABD'), setInfo)}</div>
+                              <div className="p-0.5">{ClassLink('DE級', data.date.replaceAll('-', ''), data.name, data.place, 'ABDE', data.classes.includes('ABDE'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('E級', data.date.replaceAll('-', ''), data.name, data.place, 'ABE', data.classes.includes('ABE'), setInfo)}</div>
+                              <div className="p-0.5">{ClassLink('EF級', data.date.replaceAll('-', ''), data.name, data.place, 'ABEF', data.classes.includes('ABEF'), setInfo)}</div>
                             </div>
                           </td>
                         </tr>
@@ -141,6 +144,7 @@ export default function Index() {
                               <div className="p-0.5">{ClassLink('B級', data.date.replaceAll('-', ''), data.name, data.place, 'PLB', data.classes.includes('PLB'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('C級', data.date.replaceAll('-', ''), data.name, data.place, 'PLC', data.classes.includes('PLC'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('D級', data.date.replaceAll('-', ''), data.name, data.place, 'PLD', data.classes.includes('PLD'), setInfo)}</div>
+                              <div className="p-0.5">{ClassLink('DE級', data.date.replaceAll('-', ''), data.name, data.place, 'PLDE', data.classes.includes('PLDE'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('E級', data.date.replaceAll('-', ''), data.name, data.place, 'PLE', data.classes.includes('PLE'), setInfo)}</div>
                             </div>
                           </td>
@@ -151,7 +155,9 @@ export default function Index() {
                               <div className="p-0.5">{ClassLink('B級', data.date.replaceAll('-', ''), data.name, data.place, 'ALB', data.classes.includes('ALB'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('C級', data.date.replaceAll('-', ''), data.name, data.place, 'ALC', data.classes.includes('ALC'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('D級', data.date.replaceAll('-', ''), data.name, data.place, 'ALD', data.classes.includes('ALD'), setInfo)}</div>
+                              <div className="p-0.5">{ClassLink('DE級', data.date.replaceAll('-', ''), data.name, data.place, 'ALDE', data.classes.includes('ALDE'), setInfo)}</div>
                               <div className="p-0.5">{ClassLink('E級', data.date.replaceAll('-', ''), data.name, data.place, 'ALE', data.classes.includes('ALE'), setInfo)}</div>
+                              <div className="p-0.5">{ClassLink('EF級', data.date.replaceAll('-', ''), data.name, data.place, 'ALEF', data.classes.includes('ALEF'), setInfo)}</div>
                             </div>
                           </td>
                         </tr>
@@ -201,15 +207,12 @@ export default function Index() {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <table>
-                    <thead>
+                  <table className="w-full">
+                    <tbody>
                       <tr className="font-bold">
                         <td></td>
                         <td>プロ</td>
-                        <td className="border-l-2 border-gray-600/50">アマ</td>
                       </tr>
-                    </thead>
-                    <tbody>
                       <tr>
                         <td className="font-bold">B</td>
                         <td className="border-l-2 border-gray-600/50">
@@ -219,17 +222,8 @@ export default function Index() {
                             <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBB', modal_classes.includes('PBB'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBC', modal_classes.includes('PBC'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBD', modal_classes.includes('PBD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('DE級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBDE', modal_classes.includes('PBDE'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PBE', modal_classes.includes('PBE'), setInfo)}</div>
-                          </div>
-                        </td>
-                        <td className="border-l-2 border-gray-600/50">
-                          <div className="flex">
-                            <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABO', modal_classes.includes('ABO'), setInfo)}</div>
-                            <div className="p-0.5">{ClassLink('A級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABA', modal_classes.includes('ABA'), setInfo)}</div>
-                            <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABB', modal_classes.includes('ABB'), setInfo)}</div>
-                            <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABC', modal_classes.includes('ABC'), setInfo)}</div>
-                            <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABD', modal_classes.includes('ABD'), setInfo)}</div>
-                            <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABE', modal_classes.includes('ABE'), setInfo)}</div>
                           </div>
                         </td>
                       </tr>
@@ -242,9 +236,33 @@ export default function Index() {
                             <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLB', modal_classes.includes('PLB'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLC', modal_classes.includes('PLC'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLD', modal_classes.includes('PLD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('DE級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLDE', modal_classes.includes('PLDE'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'PLE', modal_classes.includes('PLE'), setInfo)}</div>
                           </div>
                         </td>
+                      </tr>
+                      <tr className="h-2"></tr>
+                      <tr className="font-bold">
+                        <td></td>
+                        <td>アマ</td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">B</td>
+                        <td className="border-l-2 border-gray-600/50">
+                          <div className="flex">
+                            <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABO', modal_classes.includes('ABO'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('A級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABA', modal_classes.includes('ABA'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABB', modal_classes.includes('ABB'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABC', modal_classes.includes('ABC'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABD', modal_classes.includes('ABD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('DE級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABDE', modal_classes.includes('ABDE'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABE', modal_classes.includes('ABE'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('EF級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ABEF', modal_classes.includes('ABEF'), setInfo)}</div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">L</td>
                         <td className="border-l-2 border-gray-600/50">
                           <div className="flex">
                             <div className="p-0.5">{ClassLink('オープン', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALO', modal_classes.includes('ALO'), setInfo)}</div>
@@ -252,9 +270,12 @@ export default function Index() {
                             <div className="p-0.5">{ClassLink('B級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALB', modal_classes.includes('ALB'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('C級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALC', modal_classes.includes('ALC'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('D級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALD', modal_classes.includes('ALD'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('DE級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALDE', modal_classes.includes('ALDE'), setInfo)}</div>
                             <div className="p-0.5">{ClassLink('E級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALE', modal_classes.includes('ALE'), setInfo)}</div>
+                            <div className="p-0.5">{ClassLink('EF級', modal_date.replaceAll('-', ''), modal_name, modal_place, 'ALEF', modal_classes.includes('ALEF'), setInfo)}</div>
                           </div>
                         </td>
+
                       </tr>
                     </tbody>
                   </table>
