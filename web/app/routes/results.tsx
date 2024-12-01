@@ -63,7 +63,7 @@ export default function Index() {
 
   return (
     <>
-      {Loading(is_loading)}
+      {is_loading && Loading()}
       <div className="sticky top-16 z-40 bg-white">
         <div className="flex justify-between pt-2">
           <div className="flex">

@@ -62,7 +62,7 @@ export default function Couple() {
 
   return (
     <>
-      {Loading(is_loading)}
+      {is_loading && Loading()}
       <div className="top-16 z-40 bg-white">
         <div className="flex justify-between pt-2">
           <div className="flex">
@@ -129,6 +129,7 @@ export default function Couple() {
           list: result_data,
           set_info: setInfo,
           filter_type: filter_type,
+          setIsLoading: setIsLoading,
         }}/>
       </div>
     </>

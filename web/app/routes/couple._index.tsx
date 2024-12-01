@@ -8,6 +8,7 @@ export default function Index() {
   const context: {
     list: object[],
     set_info(couple_id:string, leader_name:string, partner_name:string): void;
+    setIsLoading(loading:boolean): void;
   } = useOutletContext();
   const data_list: couple_info[] = []
   if(context){
@@ -16,7 +17,9 @@ export default function Index() {
     }
   }
   const setInfo = (couple_id:string, leader_name:string, partner_name:string) => {
+    context.setIsLoading(true);
     context.set_info(couple_id, leader_name, partner_name);
+    context.setIsLoading(false);
   }
 
   return (

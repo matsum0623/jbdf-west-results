@@ -2,6 +2,7 @@ import {
   ClientLoaderFunctionArgs,
   Link,
   useLoaderData,
+  useNavigate,
   useOutletContext,
 } from "@remix-run/react";
 import { SortButton } from "../components/Utils";
@@ -19,8 +20,9 @@ export default function Index() {
   const data:{couple_id: string, leader_name:string, partner_name:string, results_list: couple_results[]} = useLoaderData<typeof clientLoader>()
 
   const context: {
-    filter_type: string,
+    filter_type: string;
     set_info(couple_id:string, leader_name:string, partner_name:string): void;
+    setIsLoading(loading:boolean): void;
   } = useOutletContext();
 
   useEffect(() => {
@@ -29,6 +31,14 @@ export default function Index() {
 
   const filterResults = (filter_type: string) => {
     return filter_type == 'ALL' ? data.results_list : data.results_list.filter((result) => result.class_id.slice(1,2) === filter_type)
+  }
+
+  const navigate = useNavigate()
+
+  const navigateToResults = (date: string, class_id: string) => {
+    context.setIsLoading(true)
+    navigate(`/results/${date}/${class_id}`)
+    context.setIsLoading(false)
   }
 
   return (
@@ -96,14 +106,14 @@ export default function Index() {
                   <td className="px-6 py-4 hidden xl:table-cell">
                     {`${result.date.slice(0, 4)}/${result.date.slice(4, 6)}/${result.date.slice(6, 8)}`}
                   </td>
-                  <td className="px-6 py-4 hidden xl:table-cell">
+                  <td className="px-6 py-4 hidden xl:table-cell underline hover:cursor-pointer" onClick={() => navigateToResults(result.date, result.class_id)}>
                     {result.competition_name}
                   </td>
                   <td className="px-6 py-4 hidden xl:table-cell">
                     {class_names[result.class_id]}
                   </td>
 
-                  <td className="py-1 table-cell text-center xl:hidden">
+                  <td className="py-1 table-cell text-center xl:hidden underline" onClick={() => navigateToResults(result.date, result.class_id)}>
                     <div>
                       {`${result.date.slice(0, 4)}/${result.date.slice(4, 6)}/${result.date.slice(6, 8)}`}
                     </div>
