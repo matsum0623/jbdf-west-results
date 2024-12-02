@@ -1,9 +1,10 @@
-import { ClientLoaderFunctionArgs, Link, useLoaderData } from "@remix-run/react";
+import { ClientLoaderFunctionArgs, Link, useLoaderData, useOutletContext } from "@remix-run/react";
 
 import { SortButton } from "../components/Utils";
 import { getData } from "../lib/fetchApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BackNumberConvert } from "../lib/util";
+import { class_names } from "../lib/const";
 
 export const clientLoader = async ({
   params,
@@ -12,9 +13,18 @@ export const clientLoader = async ({
 }
 
 export default function Index() {
-  const [result_data] = useState<couple_result[]>(useLoaderData<typeof clientLoader>().sort((a:couple_result, b:couple_result) => {
+  const data = useLoaderData<typeof clientLoader>()
+  const [result_data] = useState<couple_result[]>(data.list.sort((a:couple_result, b:couple_result) => {
     return (a['result_order'] > b['result_order']) ? 1 : -1
   }));
+
+  const context: {
+    set_info(dt:string, name:string, place:string, class_id:string): void;
+  } = useOutletContext();
+  useEffect(() => {
+    context.set_info(data.date, data.name, data.place, class_names[data.class_id]);
+  })
+
 
   const [ct, setCt] = useState(0);
   const [sort_flag, setSortFlag] = useState({
