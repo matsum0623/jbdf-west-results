@@ -1,7 +1,6 @@
 import json
 from connect_dynamodb import Couple
-
-from boto3.dynamodb.conditions import Attr
+from util import convert_result_order
 
 def lambda_handler(event, context):
 
@@ -35,7 +34,8 @@ def lambda_handler(event, context):
             'competition_place': result.get('CompetitionPlace', ''),
             'rank': result.get('Rank', ''),
             'back_number': result.get('BackNumber', ''),
-            'result': result.get('Result', '')
+            'result': result.get('Result', ''),
+            'result_order': convert_result_order(result.get('Result', '')),
         } for key, result in sorted(couple_results.get('Results', {}).items(), key=lambda x: x[0], reverse=True)]
     }
 

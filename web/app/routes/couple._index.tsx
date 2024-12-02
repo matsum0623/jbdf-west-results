@@ -3,16 +3,17 @@ import {
     useOutletContext
 } from "@remix-run/react";
 import { SortButton } from "../components/Utils";
+import { useState } from "react";
 
 export default function Index() {
   const context: {
-    list: object[],
+    result_data: couple_info[],
     set_info(couple_id:string, leader_name:string, partner_name:string): void;
     setIsLoading(loading:boolean): void;
   } = useOutletContext();
   const data_list: couple_info[] = []
   if(context){
-    for (const element of context.list) {
+    for (const element of context.result_data) {
       data_list.push(element as couple_info);
     }
   }
@@ -20,6 +21,22 @@ export default function Index() {
     context.setIsLoading(true);
     context.set_info(couple_id, leader_name, partner_name);
     context.setIsLoading(false);
+  }
+
+  const [ct, setCt] = useState(0);
+  const [sort_flag, setSortFlag] = useState({
+    couple_id: true,
+    leader_name: false,
+    partner_name: false,
+  });
+  const sortResultData = (key: keyof couple_info) => {
+    sort_flag[key] = !sort_flag[key]
+    setSortFlag(sort_flag)
+    context.result_data.sort((a:couple_info, b:couple_info) => {
+      if(a[key] > b[key]) return 1 * (sort_flag[key] ? 1 : -1)
+      return -1 * (sort_flag[key] ? 1 : -1)
+    })
+    setCt(ct + 1)
   }
 
   return (
@@ -33,21 +50,21 @@ export default function Index() {
                 <div className="flex items-center justify-center">
                     <span className="hidden xl:block">選手番号</span>
                     <span className="block xl:hidden">ID</span>
-                    <Link to="/results">{SortButton()}</Link>
+                    <button onClick={() => sortResultData('couple_id')}>{SortButton()}</button>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
                   <div className="flex items-center justify-center">
                     <span className="hidden xl:block">リーダー名</span>
                     <span className="block xl:hidden">L</span>
-                    <Link to="/results">{SortButton()}</Link>
+                    <button onClick={() => sortResultData('leader_name')}>{SortButton()}</button>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
                   <div className="flex items-center justify-center">
                     <span className="hidden xl:block">パートナー名</span>
                     <span className="block xl:hidden">P</span>
-                    <Link to="/results">{SortButton()}</Link>
+                    <button onClick={() => sortResultData('partner_name')}>{SortButton()}</button>
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">

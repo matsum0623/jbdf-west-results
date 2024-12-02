@@ -13,6 +13,7 @@ type couple_result = {
     back_number: string;
     rank: string;
     result: string;
+    result_order: number;
 }
 
 type couple_info = {
@@ -28,6 +29,7 @@ type couple_results = {
     rank: string;
     back_number: string;
     result: string;
+    result_order: number;
 }
 
 type ClassNames = {

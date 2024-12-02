@@ -134,7 +134,7 @@ export default function Index() {
         </div>
         <div className="mt-2 xl:mt-8 xl:mx-4">
           <Outlet context={{
-            list: result_data,
+            result_data: result_data,
             set_info: setInfo,
             is_loading: is_loading,
           }}/>

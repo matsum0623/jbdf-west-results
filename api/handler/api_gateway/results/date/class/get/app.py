@@ -1,5 +1,6 @@
 import json
 from connect_dynamodb import Results
+from util import convert_result_order
 
 def lambda_handler(event, context):
 
@@ -26,7 +27,8 @@ def lambda_handler(event, context):
         'partner_name': values['Partner'],
         'back_number': values['BackNumber'],
         'rank': values['Rank'],
-        'result': values['Result']
+        'result': values['Result'],
+        'result_order': convert_result_order(values['Result']),
     } for couple_id, values in sorted(Results.get(date, class_id).get('Results', {}).items(), key=lambda x: x[0])]
 
     response = {

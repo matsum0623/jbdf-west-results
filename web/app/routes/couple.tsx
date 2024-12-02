@@ -126,7 +126,7 @@ export default function Couple() {
       </div>
       <div className="mt-2 xl:mt-8 xl:mx-4">
         <Outlet context={{
-          list: result_data,
+          result_data: result_data,
           set_info: setInfo,
           filter_type: filter_type,
           setIsLoading: setIsLoading,

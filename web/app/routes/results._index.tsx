@@ -1,5 +1,4 @@
 import {
-  Link,
   useOutletContext,
 } from "@remix-run/react";
 
@@ -11,13 +10,13 @@ import { useState } from "react";
 
 export default function Index() {
   const context: {
-    list: object[],
+    result_data: results_data[],
     set_info(dt: string, name: string, place: string, class_name: string): void,
     is_loading: boolean,
   } = useOutletContext();
   const data_list: results_data[] = []
   if(context){
-    for (const element of context.list) {
+    for (const element of context.result_data) {
       data_list.push(element as results_data);
     }
   }
@@ -38,6 +37,24 @@ export default function Index() {
     setModalClasses(classes)
   }
 
+  const [ct, setCt] = useState(0);
+  const [sort_flag, setSortFlag] = useState({
+    date: false,
+    leader_name: false,
+    name: false,
+    place: false,
+    classes: false,
+  });
+  const sortResultData = (key: keyof results_data) => {
+    sort_flag[key] = !sort_flag[key]
+    setSortFlag(sort_flag)
+    context.result_data.sort((a:results_data, b:results_data) => {
+      if(a[key] > b[key]) return 1 * (sort_flag[key] ? 1 : -1)
+      return -1 * (sort_flag[key] ? 1 : -1)
+    })
+    setCt(ct + 1)
+  }
+
   return (
     <>
       <div className="xl:mt-8 xl:mx-4">
@@ -45,32 +62,31 @@ export default function Index() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
-                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell underline hover:cursor-pointer" onClick={() => sortResultData('date')}>
                   <div className="flex items-center">
                     日付
-                    <Link to="/results">{SortButton()}</Link>
+                    <button>{SortButton()}</button>
                   </div>
                 </th>
-                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell underline hover:cursor-pointer" onClick={() => sortResultData('name')}>
                   <div className="flex items-center">
                     競技会名称
-                    <Link to="/results">{SortButton()}</Link>
+                    <button>{SortButton()}</button>
                   </div>
                 </th>
-                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
+                <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell underline hover:cursor-pointer" onClick={() => sortResultData('place')}>
                   <div className="flex items-center">
                     開催場所
-                    <Link to="/results">{SortButton()}</Link>
+                    <button>{SortButton()}</button>
                   </div>
                 </th>
                 <th scope="col" className="xl:px-6 xl:py-3 hidden xl:table-cell">
-                  <div className="flex items-center">
+                  <div className="flex justify-center">
                     クラス
-                    <Link to="/results">{SortButton()}</Link>
                   </div>
                 </th>
 
-                <th scope="col" className="xl:px-6 xl:py-3 table-cell xl:hidden">
+                <th scope="col" className="xl:px-6 xl:py-3 table-cell xl:hidden underline xl:no-underline" onClick={() => sortResultData('date')}>
                   <div className="text-center">
                     日付
                   </div>
@@ -88,7 +104,7 @@ export default function Index() {
               </tr>
             </thead>
             <tbody>
-              {data_list.map((data: results_data) => (
+              {context.result_data.map((data: results_data) => (
                 <tr key={data.date} className="bg-white border-b">
                   <th scope="row" className="px-6 py-4 xl:font-medium text-gray-900 whitespace-nowrap hidden xl:table-cell">
                     {`${data.date.slice(0, 4)}/${data.date.slice(4, 6)}/${data.date.slice(6, 8)}`}
