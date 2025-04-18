@@ -1,0 +1,15 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - cd web
+        - npm install
+        - echo "VITE_REST_API=$REST_API" >> .env
+        - npm run build
+  artifacts:
+    baseDirectory: web/build/client
+    files:
+      - "**/*"
+  cache:
+    paths: []
