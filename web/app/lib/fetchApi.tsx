@@ -1,5 +1,3 @@
-import config from "../config.json"
-
 export abstract class CustomBaseError extends Error {
     private errorCode:number;
     private moduleError: Error | undefined;
@@ -39,7 +37,7 @@ export class NotFoundError extends CustomBaseError{
 }
 
 export async function fetchApi(path:string, opt:object) {
-    return await fetch(config.RESTApi + path, opt)
+    return await fetch(import.meta.env.VITE_REST_API + path, opt)
     .then(response => {
         if(response.status == 200){
             return response.json().then(j => j)
@@ -51,9 +49,10 @@ export async function fetchApi(path:string, opt:object) {
     )
 }
 
-export async function getData(path:string) {
+export async function getData(path:string, headers:object = {}) {
     return await fetchApi(path, {
         method: "GET",
+        headers: headers
     })
 }
 
