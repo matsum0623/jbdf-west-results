@@ -5,6 +5,16 @@ Description: >
 
   Sample SAM Template for api
 
+Parameters:
+  EnvName:
+    Type: String
+    Default: develop
+    AllowedValues:
+      - develop
+      - staging
+      - production
+    Description: 環境名
+
 Globals:
   Function:
     Handler: app.lambda_handler
@@ -20,7 +30,7 @@ Resources:
   JbdfWestResultsDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: jbdf-west-results
+      TableName: !Sub jbdf-west-results-${EnvName}
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: PK
@@ -52,7 +62,7 @@ Resources:
   CommonLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: CommonLayer
+      LayerName: !Sub jbdf-west-results-${EnvName}-CommonLayer
       ContentUri: layer/common_layer/
       CompatibleRuntimes:
         - python3.12
@@ -60,7 +70,7 @@ Resources:
   CommonAPI: # API Gateway
     Type: AWS::Serverless::Api
     Properties:
-      Name: jbdf-west-results-api
+      Name: !Sub jbdf-west-results-${EnvName}-api
       Cors:
         AllowOrigin: "'*'"
         AllowHeaders: "'Origin, X-Requested-With, Content-Type, Authorization, Accept'"
