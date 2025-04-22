@@ -1,0 +1,33 @@
+version = 0.1
+[production.deploy.parameters]
+stack_name = "jbdf-west-results"
+resolve_s3 = true
+s3_prefix = "jbdf-west-results"
+region = "ap-northeast-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+parameter_overrides = "EnvName=production"
+
+[default]
+[default.global.parameters]
+stack_name = "jbdf-west-results"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.validate.parameters]
+lint = true
+
+[default.package.parameters]
+resolve_s3 = true
+
+[default.sync.parameters]
+watch = true
+
+[default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
+warm_containers = "EAGER"
