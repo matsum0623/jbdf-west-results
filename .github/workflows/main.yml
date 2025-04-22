@@ -2,9 +2,14 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'api/**'
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -14,5 +19,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
-      - run: cd api && sam build --use-container
-      - run: cd api && sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-env production
+      - run: sam build --use-container
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-env production
