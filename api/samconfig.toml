@@ -9,6 +9,16 @@ capabilities = "CAPABILITY_IAM"
 image_repositories = []
 parameter_overrides = "EnvName=production"
 
+[production_local.deploy.parameters]
+stack_name = "jbdf-west-results-develop"
+resolve_s3 = true
+s3_prefix = "jbdf-west-results-develop"
+region = "ap-northeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+parameter_overrides = "EnvName=develop"
+
 [default]
 [default.global.parameters]
 stack_name = "jbdf-west-results"
